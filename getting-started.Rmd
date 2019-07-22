@@ -1,5 +1,6 @@
 ---
-title: "rPortifolio"
+title: "Portifolio - Programando IA  com R"
+Author: "Letticia Nicoli"
 output: html_document
 ---
 
@@ -8,21 +9,144 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## R Markdown
+Este portfólio deve  ser capaz de  demonstrar o que o aluno aprendeu ao longo da disciplina e o que ele  é capaz de fazer utilizando a linguagem R como ferramenta estatística e de modelagem de inteligência artificial.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+##Sequência
+Apenas para testes simples, não use isso em produção! 
+Coloque em um variável :)
+```{r}
+1:9
+80:32
+4:-2
+3:3
+1:0
+pi:10
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+a <- "1" -> b
+c <- "2" -> d
+e <- "3" -> f
+g <- "4" -> h
+i <- "5"
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+##Criação de diferentes tipos de vetores
+```{r}
+vetor_inteiro <- 11:13
+vetor_inteiro
+vetor_numerico <- c(1.1,1.2,1.3)
+vetor_numerico
+vetor_texto <- letters[11:13]
+vetor_texto
+vetor_imaginario <- c((1+1i), (1+2i),(1+1i))
+vetor_imaginario
+vetor_logico <- c(TRUE,FALSE,TRUE)
+vetor_logico
+```
+
+#Lista
+```{r}
+lista <- list(vetor_inteiro,vetor_numerico,vetor_texto,vetor_imaginario,vetor_logico)
+```
+
+#Matriz
+```{r}
+numerospares <- matrix(seq(from = 2,by = 2,length.out = 16), nrow =4)
+```
+
+#Data Frame
+```{r}
+dataframe <- data.frame("Inteiros" = vetor_inteiro, 
+                        "Numéricos" = vetor_numerico,
+                        "Textos" = vetor_texto,
+                        "Imaginários" = vetor_imaginario,
+                        "Lógicos" = vetor_logico, 
+                        row.names = c("L1","L2","L3"))
+```
+
+#Seq Function
+```{r}
+seq(0, 1, length.out = 11)
+seq(stats::rnorm(20))
+seq(1, 9, by = 2)
+seq(1, 9, by = pi) # stays below 'end'
+seq(1, 6, by = 3)
+seq(1.575, 5.125, by = 0.05)
+seq(17) # same as 1:17, or even better
+seq_len(17)
+```
+
+#Replication
+```{r}
+rep(0, times = 40)
+rep(c(0, 1, 2), times = 10)
+rep(c(0, 1, 2), each = 10)
+```
+
+#Create seq 
+```{r}
+my_seq = seq(5, 10, length.out = 30)
+my_seq2 = seq(from = 5, by = 10, length = 30)
+```
+
+#Length Seq
+length(my_seq2)
+
+#Set seq with variable
+my_seq_clone = seq_along(my_seq2)
+#or
+seq(along.with=my_seq)
+
+#Help Operator
+?':'   
+#or
+?`:`
+
+#Special Values (NA, NaN, Inf e -Inf, Null)
+
+#NA vs NULL
+c(18,NA,NA,19,50)
+c(18,NA,NULL,19,50)
+
+class(NA)
+
+#Create variables with special values
+var_na = NA
+var_nan = 0/0
+var_inf = 9/0
+var_inf_neg = -1/0
+var_null = NULL
+
+#Create vector
+c(var_na,var_nan,var_inf,var_inf_neg,var_null)
+
+#Validations
+is.na(var_na)
+is.nan(var_nan)
+is.infinite(var_inf)
+is.infinite(var_inf_neg)
+is.finite(var_inf) #false
+is.null(var_null)
+
+#Filters
+
+mtcars
+mtcars[2,5] #row,column
+mtcars[2:4,5]
+mtcars[2:4,5:7]
+mtcars[8:9, c(1,2,4)]
+mtcars[2:4, c("mpg", "wt")]
+
+#Filter mpg >= 15
+row.names(mtcars[mtcars[,1] >= 15,])
+
+
+Um exemplo de gráficos
+
+```{r echo=FALSE}
+plot(c(1,8,3),c(1,9,3))
+
+
