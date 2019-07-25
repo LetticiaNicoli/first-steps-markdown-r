@@ -1,5 +1,5 @@
 ---
-title: "Portifolio - Programando IA  com R"
+title: "Programando IA com R"
 Author: "Letticia Nicoli"
 output: html_document
 ---
@@ -8,22 +8,24 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-Este portfólio deve  ser capaz de  demonstrar o que o aluno aprendeu ao longo da disciplina e o que ele  é capaz de fazer utilizando a linguagem R como ferramenta estatística e de modelagem de inteligência artificial.
+# Portifólio R
+*Realizado por Letticia Nicoli*   
 
+Esse markdown descreve, de forma breve, o que aprendi durante as aulas de "Programando IA com R" como ferramenta estatística e de modelagem de inteligência artificial.
 
-##Sequência
+## Criação de sequências e atribuição em variáveis
 Apenas para testes simples, não use isso em produção! 
-Coloque em um variável :)
-```{r}
-1:9
-80:32
-4:-2
-3:3
+Coloque em uma variável :)
+```{r echo=TRUE}
+1:5
+50:20
+6:-3
+4:4
 1:0
-pi:10
+pi:6
 ```
 
+Atribuindo um valor as varíaveis!
 ```{r}
 a <- "1" -> b
 c <- "2" -> d
@@ -31,35 +33,137 @@ e <- "3" -> f
 g <- "4" -> h
 i <- "5"
 ```
+**Obs.:** Tá tudo bem, podemos utilizar `=` ao invés de `<-`
 
 
-##Criação de diferentes tipos de vetores
+## Valores Especiais
+Os valores especiais são `NA`, `NaN`, `Inf` e `-Inf`, `Null`  
+
+Exemplos:
 ```{r}
+var_na = NA
+var_nan = 0/0
+var_inf = 9/0
+var_inf_neg = -1/0
+var_null = NULL
+```
+
+**NA vs NULL** 
+```{r echo=TRUE}
+c(18,NA,NA,19,50)
+c(18,NA,NULL,19,50)
+```
+
+
+Existem funções para validarmos se a variável é um valor especial:
+
+```{r}
+is.na(var_na)
+is.nan(var_nan)
+is.infinite(var_inf)
+is.infinite(var_inf_neg)
+is.finite(var_inf)
+is.null(var_null)
+```
+
+
+## Help
+E antes de irmos mais a fundo...  
+Se for precisar de ajudar utilize o comando `?` seguido do nome da função, operador, pacotes e etc que você tem dúvida.  
+Conforme exemplo abaixo:
+
+```{r}
+?`:`
+```
+
+```{r}
+?'is.infinite'
+```
+
+## Criação de diferentes tipos de vetores
+
+**Vetor Inteiro**
+```{r echo=TRUE}
 vetor_inteiro <- 11:13
 vetor_inteiro
+```
+
+**Vetor Numérico**
+```{r echo=TRUE}
 vetor_numerico <- c(1.1,1.2,1.3)
 vetor_numerico
+```
+
+**Vetor Texto**
+```{r echo=TRUE}
 vetor_texto <- letters[11:13]
 vetor_texto
+```
+
+**Vetor Imaginário**
+```{r echo=TRUE}
 vetor_imaginario <- c((1+1i), (1+2i),(1+1i))
 vetor_imaginario
+```
+
+**Vetor Lógico**
+```{r echo=TRUE}
 vetor_logico <- c(TRUE,FALSE,TRUE)
 vetor_logico
 ```
 
-#Lista
-```{r}
-lista <- list(vetor_inteiro,vetor_numerico,vetor_texto,vetor_imaginario,vetor_logico)
+## Criação de listas
+```{r echo=TRUE}
+list(vetor_inteiro,vetor_numerico,vetor_texto,vetor_imaginario,vetor_logico)
 ```
 
-#Matriz
+## Criação de sequências
+No começo do markdown vimos que fazendo `{valor}:{valor}` conseguimos ter uma sequência de valores porém se você quer algo mais elaborado podemos utilizar a função **seq** para realizar ações como intervalo entre valores, quantidade total de valores dentro daquela sequência e etc.
+
 ```{r}
+seq(0, 1, length.out = 11)
+
+seq(1, 9, by = 2)
+
+seq(1, 6, by = 3)
+
+seq_len(17)
+```
+
+## Criação de matrizes
+```{r echo=TRUE}
 numerospares <- matrix(seq(from = 2,by = 2,length.out = 16), nrow =4)
+numerospares
 ```
 
-#Data Frame
+Conseguimos ir muito além com matrizes, como por exemplo realizar **multiplicação** entre elas :O
+
+Definindo algumas variáveis
 ```{r}
-dataframe <- data.frame("Inteiros" = vetor_inteiro, 
+vet_a = c(10,20,30,40,50)
+vet_b = vet_a * 2
+vet_c = sqrt(vet_b)
+```
+
+Criando nossas 2 matrizes:  
+```{r}
+m1 = matrix(data = c(vet_a,vet_b,vet_c), 
+             ncol = 5, nrow = 6, byrow = TRUE)
+
+m2 = matrix(data = c(vet_a,vet_b,vet_c), 
+            ncol = 6, nrow = 5)
+```
+
+A mágica acontecendo:
+```{r}
+ m1 %*% m2
+```
+**Obs.:** Sem `%` multiplica elemento por elemento, com `%` multiplica a matrix 
+Se quisermos ir além, temos também matriz transposta `t()`, diagonal `diag()`, inversa `solve()`!
+
+## Criação de data frames
+```{r echo=TRUE}
+data.frame("Inteiros" = vetor_inteiro, 
                         "Numéricos" = vetor_numerico,
                         "Textos" = vetor_texto,
                         "Imaginários" = vetor_imaginario,
@@ -67,82 +171,55 @@ dataframe <- data.frame("Inteiros" = vetor_inteiro,
                         row.names = c("L1","L2","L3"))
 ```
 
-#Seq Function
+## Replicando valores
 ```{r}
-seq(0, 1, length.out = 11)
-seq(stats::rnorm(20))
-seq(1, 9, by = 2)
-seq(1, 9, by = pi) # stays below 'end'
-seq(1, 6, by = 3)
-seq(1.575, 5.125, by = 0.05)
-seq(17) # same as 1:17, or even better
-seq_len(17)
-```
-
-#Replication
-```{r}
-rep(0, times = 40)
+rep(0, times = 20)
 rep(c(0, 1, 2), times = 10)
 rep(c(0, 1, 2), each = 10)
 ```
 
-#Create seq 
-```{r}
-my_seq = seq(5, 10, length.out = 30)
-my_seq2 = seq(from = 5, by = 10, length = 30)
+
+## Filtros
+Estou utilizando o dataset `mtcars` próprio do R para demonstrar como conseguimos filtrar informações.  
+
+```{r echo=TRUE}
+mtcars
 ```
 
-#Length Seq
-length(my_seq2)
-
-#Set seq with variable
-my_seq_clone = seq_along(my_seq2)
-#or
-seq(along.with=my_seq)
-
-#Help Operator
-?':'   
-#or
-?`:`
-
-#Special Values (NA, NaN, Inf e -Inf, Null)
-
-#NA vs NULL
-c(18,NA,NA,19,50)
-c(18,NA,NULL,19,50)
-
-class(NA)
-
-#Create variables with special values
-var_na = NA
-var_nan = 0/0
-var_inf = 9/0
-var_inf_neg = -1/0
-var_null = NULL
-
-#Create vector
-c(var_na,var_nan,var_inf,var_inf_neg,var_null)
-
-#Validations
-is.na(var_na)
-is.nan(var_nan)
-is.infinite(var_inf)
-is.infinite(var_inf_neg)
-is.finite(var_inf) #false
-is.null(var_null)
-
-#Filters
-
-mtcars
+Uma das maneiras para selecionar uma informação em especiífico é utilizar `{nomeDataSet}[{numeroLinha}:{numeroColuna}]`.
+```{r}
 mtcars[2,5] #row,column
 mtcars[2:4,5]
 mtcars[2:4,5:7]
 mtcars[8:9, c(1,2,4)]
 mtcars[2:4, c("mpg", "wt")]
+```
+**Obs**.: Como podemos observar também é possível utilizar sequências e vetores para trazer mais informações. 
 
-#Filter mpg >= 15
-row.names(mtcars[mtcars[,1] >= 15,])
+## Amostras e Simulações
 
+Distribuição uniforme
+```{r}
+runif(n=2, min = 1, max = 10)
+```
+
+Avalia probabilidade
+```{r}
+dunif(x= 8, min = 1, max = 10)
+```
+**Obs.:** Número máximo nao é sorteado.
+
+#Avalia probabilidade acumulaa
+punif(q= 2, min = 1, max = 10)
+
+#Amostra a partir de um domínio
+set.seed(1) #coloca marcador para que o sorteio sempre seja igual
+amostra = c( "T", "R", "I", "A", "N", "G", "U", "L", "O", "S")
+sample(x = amostra, replace = FALSE)
+sample(x = amostra, replace = TRUE)
+sample(x = amostra, size = 5)
+sample(x = amostra, size = 10, replace = TRUE,
+       prob = c(1, 1, 5, 1, 1, 1, 1, 1, 1, 5))
 
 Um exemplo de gráficos
 
