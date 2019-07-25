@@ -180,7 +180,7 @@ rep(c(0, 1, 2), each = 10)
 
 
 ## Filtros
-Estou utilizando o dataset `mtcars` próprio do R para demonstrar como conseguimos filtrar informações.  
+Estou utilizando o dataset `mtcars` do próprio R para demonstrar como conseguimos filtrar informações.  
 
 ```{r echo=TRUE}
 mtcars
@@ -198,32 +198,183 @@ mtcars[2:4, c("mpg", "wt")]
 
 ## Amostras e Simulações
 
-Distribuição uniforme
+**Distribuição uniforme**
 ```{r}
 runif(n=2, min = 1, max = 10)
 ```
 
-Avalia probabilidade
+**Avalia probabilidade**
 ```{r}
 dunif(x= 8, min = 1, max = 10)
 ```
 **Obs.:** Número máximo nao é sorteado.
 
-#Avalia probabilidade acumulaa
+**Avalia probabilidade acumulada**
+```{r}
 punif(q= 2, min = 1, max = 10)
+```
 
-#Amostra a partir de um domínio
-set.seed(1) #coloca marcador para que o sorteio sempre seja igual
+**Amostra a partir de um domínio**   
+
+Colocar marcador para que o sorteio sempre seja igual
+```{r}
+set.seed(1) 
+```
+
+```{r echo=TRUE}
 amostra = c( "T", "R", "I", "A", "N", "G", "U", "L", "O", "S")
 sample(x = amostra, replace = FALSE)
 sample(x = amostra, replace = TRUE)
 sample(x = amostra, size = 5)
 sample(x = amostra, size = 10, replace = TRUE,
        prob = c(1, 1, 5, 1, 1, 1, 1, 1, 1, 5))
-
-Um exemplo de gráficos
-
-```{r echo=FALSE}
-plot(c(1,8,3),c(1,9,3))
+```
 
 
+Simulando um modelo linear
+
+```{r}
+set.seed(20)
+b0 = rep(0.5, times = 100)
+b1 = rep(2, times = 100)
+x = rnorm(n = 100, mean = 0, sd = 1)
+e = rnorm(n = 100, mean = 0, sd = 2)
+
+valor = b0 + (b1 * x) + e
+```
+
+```{r}
+library(plotly)
+plot_ly( x = x, y = valor, type = "scatter" )
+```
+**Obs.:** A função `plot_ly` permite a criação de gráficos
+
+## Loop
+
+```{r}
+acumuladora = 0;
+vetor = NULL;
+
+for (passenger in AirPassengers) {
+  acumuladora = acumuladora + passenger;
+  vetor = c(vetor, acumuladora);
+}
+```
+**Obs.:** O dataset `AirPassengers` vem por padrão no R
+
+## Fatorial
+
+```{r}
+func = function(num){
+  
+  init = 1;
+  for (variable in seq_len(num)) {
+    init = init * variable;
+  }
+  
+  init
+}
+
+func(3)
+```
+
+## Análise Grática com Plots
+
+**Parábola Quadrática**
+```{r}
+x = -10:10
+plot( x = x, y = x**2, main = "Parábola")
+
+plot( x = x, y = x**2, main = "Parábola", type='l')
+plot( x = x, y = x**2, main = "Parábola", type='p')
+plot( x = x, y = x**2, main = "Parábola", type='b')
+plot( x = x, y = x**2, main = "Parábola", type='o')
+plot( x = x, y = x**2, main = "Parábola", type='h') 
+plot( x = x, y = x**2, main = "Parábola", type='s')
+plot( x = x, y = x**2, main = "Parábola", type='S')
+```
+
+**Análise de Tendências** 
+```{r}
+head(cars)
+summary(cars)
+plot(x= cars$speed, y = cars$dist)
+```
+
+**Histograma**
+Frequência e distribuição
+
+```{r}
+sequency = -10:10
+hist(sequency^2)
+```
+
+**Boxplot**
+```{r}
+f = airquality$Ozone ~ airquality$Month
+boxplot(f,data=airquality)
+```
+
+**Multiplos Gráficos**
+```{r}
+par(mfrow=c(1,2))
+plot(airquality$Wind, airquality$Ozone)
+plot(airquality$Solar.R, airquality$Ozone)
+```
+   
+**Obs.:** O dataset `Airquality` também vem por padrão no R
+
+## Pipe
+O operador `%>%` (pipe) foi uma das grandes revoluções do R, tornando a leitura de códigos mais lógica, fácil e compreensível.   
+É necessário ter instalado o pacote `magrittr`
+```{r}
+library(magrittr)
+```
+
+A ideia do operador `%>%` (pipe) é bem simples: usar o valor resultante da expressão do lado esquerdo como primeiro argumento da função do lado direito.   
+Vamos calcular a raiz quadrada da soma dos valores de 1 a 4. Primeiro, sem o pipe.
+```{r}
+x <- c(1, 2, 3, 4)
+sqrt(sum(x))
+```
+
+Agora com o pipe.
+```{r}
+x %>% sum %>% sqrt
+```
+
+## Clusters
+
+**Distribuição**
+```{r}
+set.seed(1909)
+x = rnorm(15,mean = rep(1:3, each=5),sd = 0.2)
+y = rnorm(15,mean = rep(c(1,2), each=5),sd = 0.2)
+plot(x,y,col='blue',pch=19,cex=1)
+text(x + 0.05, y + 0.05, labels=as.character(1:15))
+```
+
+**Kmeans**
+```{r}
+mydata = data.frame(x,y)
+modelo = kmeans(x = mydata, centers = 3)
+
+modelo$centers 
+```
+Acima podemos observar os centroides dos clusters!
+
+## Curiosidade
+Existe um dataset do **Starwars** <3   
+Você vai precisar instalar o pacote `dplyr`
+```{r}
+library('dplyr')
+head(starwars)
+```
+
+```{r}
+starwars %>% filter(species == "Droid")
+```
+
+## Hey!
+<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="60" height="60"/> | Todo esse conteúdo está disponível no meu GitHub, [clique aqui](https://github.com/LetticiaNicoli/first-steps-markdown-r)  :)  
+ 
